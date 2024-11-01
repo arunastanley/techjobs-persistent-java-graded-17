@@ -6,7 +6,7 @@ import jakarta.validation.constraints.Size;
 @Entity
 public class Skill extends AbstractEntity {
 
-    @Size(max = 300, message = "Location must not exceed 300 characters")
+    @Size(max = 300, message = "Description must not exceed 300 characters")
     private String description;
 
     public Skill(String description){
@@ -16,11 +16,11 @@ public class Skill extends AbstractEntity {
 
     public Skill(){}
 
-    public @Size(max = 300, message = "Location must not exceed 300 characters") String getDescription() {
+    public String getDescription() {
         return description;
     }
 
-    public void setDescription(@Size(max = 300, message = "Location must not exceed 300 characters") String description) {
+    public void setDescription(String description) {
         this.description = description;
     }
 

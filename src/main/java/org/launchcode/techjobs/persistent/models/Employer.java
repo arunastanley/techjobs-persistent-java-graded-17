@@ -7,8 +7,8 @@ import jakarta.validation.constraints.Size;
 @Entity
 public class Employer extends AbstractEntity {
 
-    @NotBlank(message = "Location is required")
-    @Size(max = 80, message = "Location must not exceed 80 characters")
+    @NotBlank(message = "Location cannot be blank")
+    @Size(max = 80,message = "Location cannot exceed 80 characters")
     private String location;
 
     public Employer(String location) {
@@ -18,11 +18,11 @@ public class Employer extends AbstractEntity {
 
     public Employer() {}
 
-    public @NotBlank @Size(max = 80) String getLocation() {
+    public String getLocation() {
         return location;
     }
 
-    public void setLocation(@NotBlank @Size(max = 80) String location) {
+    public void setLocation(String location) {
         this.location = location;
     }
 
