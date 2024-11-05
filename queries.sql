@@ -14,5 +14,6 @@ FROM employer
 where location = "St. Louis City";
 
 --Part 3
+DROP table job;
 
 --Part 4
