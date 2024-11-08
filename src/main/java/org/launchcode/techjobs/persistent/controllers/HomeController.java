@@ -43,7 +43,7 @@ public class HomeController {
 
     @GetMapping("add")
     public String displayAddJobForm(Model model) {
-	model.addAttribute("title", "Add Job");
+        model.addAttribute("title", "Add Job");
         model.addAttribute(new Job());
         model.addAttribute("employers",employerRepository.findAll());
         model.addAttribute("skills",skillRepository.findAll());
@@ -52,15 +52,20 @@ public class HomeController {
 
     @PostMapping("add")
     public String processAddJobForm(@ModelAttribute @Valid Job newJob,
-                                       Errors errors, Model model, @RequestParam int employerId, @RequestParam List<Integer> skills) {
+                                    Errors errors, Model model, @RequestParam int employerId, @RequestParam (required = false) List<Integer> skills ) {
 
-        if (errors.hasErrors()) {
-	    model.addAttribute("title", "Add Job");
+        if (errors.hasErrors() || skills == null) {
+            model.addAttribute("title", "Add Job");
 
             model.addAttribute("employers",employerRepository.findAll());
             model.addAttribute("skills",skillRepository.findAll());
+
+            if(skills == null) {
+                model.addAttribute("error", "You have to select at least 1 skill");
+            }
             return "add";
         }
+
 
         Optional<Employer> result = employerRepository.findById(employerId);
         if (!result.isEmpty()){
@@ -69,12 +74,16 @@ public class HomeController {
             newJob.setEmployer(employer);
         }
 
-        List<Skill> skillObjs = (List<Skill>) skillRepository.findAllById(skills);
-        newJob.setSkills(skillObjs);
 
-        jobRepository.save(newJob);
+            List<Skill> skillObjs = (List<Skill>) skillRepository.findAllById(skills);
+            newJob.setSkills(skillObjs);
 
-        return "redirect:";
+            jobRepository.save(newJob);
+
+            return "redirect:";
+
+
+
     }
 
     @GetMapping("view/{jobId}")
